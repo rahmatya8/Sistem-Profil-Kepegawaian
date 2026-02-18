@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Jenis Kelamin</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="role-admin">
+
+<!-- TOMBOL KELUAR -->
+<!-- <button class="tombol-keluar">Log Out</button> -->
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+    <div class="logo">
+        <span>LOGO</span>
+        <button class="tombol-menu" id="tombolMenu">✕</button>
+    </div>
+
+    <hr class="garis-menu" />
+
+    <div class="item-menu aktif">Profil Data Pegawai</div>
+
+    <hr class="garis-menu" />
+
+    <div class="item-menu">Tambah Data Pegawai Baru</div>
+
+    <hr class="garis-menu" />
+
+    <div class="item-menu">Pengaturan Akun</div>
+
+    <hr class="garis-menu" />
+
+    <div class="item-menu" id="menuDataMaster">
+        Data Master
+        <span class="panah-menu" id="panahDataMaster">▼</span>
+    </div>
+
+    <div class="submenu" id="submenuDataMaster">
+
+        <a href="Admin_DM_JenisKelamin.html" class="item-submenu aktif">Jenis Kelamin</a>
+        <a href="Admin_DM_Agama.html" class="item-submenu">Agama</a>
+        <a href="Admin_DM_StatusPerkawinan.html" class="item-submenu">Status Perkawinan</a>
+        <a href="Admin_DM_JenjangPendidikan.html" class="item-submenu">Jenjang Pendidikan</a>
+        <a href="Admin_DM_HubunganKeluarga.html" class="item-submenu">Hubungan Keluarga</a>
+        <a href="Admin_DM_Golongan.html" class="item-submenu">Golongan</a>
+        <a href="Admin_DM_Jabatan.html" class="item-submenu">Jabatan</a>
+        <a href="Admin_DM_UnitKerja.html" class="item-submenu">Unit Kerja / Divisi</a>
+        <a href="Admin_DM_JenisDiklat.html" class="item-submenu">Jenis Diklat</a>
+        <a href="Admin_DM_PredikatSKP.html" class="item-submenu">Predikat SKP</a>
+        <a href="Admin_DM_JenisPenghargaan.html" class="item-submenu">Jenis Penghargaan</a>
+
+    </div>
+
+    <hr class="garis-menu" />
+
+
+</aside>
+
+<!-- KONTEN -->
+<main class="konten">
+
+<h2>Data Master</h2>
+
+<!-- BARIS ATAS -->
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+
+    <!-- SHOW ENTRIES -->
+    <div>
+        Show 
+        <select id="entriesSelect" style="height:28px;">
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="25">25</option>
+        </select>
+        Entries
+    </div>
+
+    <!-- SEARCH -->
+    <div>
+        Search 
+        <input type="text" id="searchInput" placeholder="Cari..." style="height:28px;">
+    </div>
+</div>
+
+<!-- HEADER MERAH -->
+<div style="
+    background:#8b0000;
+    color:white;
+    padding:12px 15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:0;
+">
+    <span>Manage Jenis Kelamin</span>
+    <div>
+        <button class="tombol-hapus" onclick="hapusTerpilih()">Delete</button>
+        <button class="tombol-tambah" onclick="tambahData()">+ Add New</button>
+    </div>
+</div>
+
+<!-- TABEL -->
+<table width="100%" border="1" cellspacing="0" cellpadding="8">
+    <thead>
+        <tr>
+            <th width="5%">
+                <input type="checkbox" id="checkAll">
+            </th>
+            <th>Jenis Kelamin</th>
+            <th width="15%">Aksi</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody">
+        <!-- Diisi JS -->
+    </tbody>
+</table>
+
+<!-- FOOTER TABLE -->
+<div style="display:flex; justify-content:space-between; margin-top:10px;">
+    <div id="infoText">Showing 1 to 2 of 2 entries</div>
+    <div id="pagination">
+        <button onclick="prevPage()">Previous</button>
+        <button onclick="nextPage()">Next</button>
+    </div>
+</div>
+
+</main>
+
+</div>
+
+<script src="assets/js/script.js"></script>
+<script>
+    let dataMaster = []; // Kosong dulu supaya bisa tes "Belum ada data"
+
+function renderTable() {
+    const tbody = document.getElementById("tableBody");
+    tbody.innerHTML = "";
+
+    if (dataMaster.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="3" style="text-align:center; padding:20px;">
+                    Belum ada data
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    dataMaster.forEach((item, index) => {
+        tbody.innerHTML += `
+            <tr>
+                <td><input type="checkbox" value="${index}"></td>
+                <td>${item}</td>
+                <td>
+                    <button class="tombol-ubah" onclick="editData(${index})">✏</button>
+                    <button class="tombol-hapus" onclick="hapusData(${index})">🗑</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function tambahData() {
+    const nama = prompt("Masukkan Jenis Kelamin:");
+
+    if (nama && nama.trim() !== "") {
+        dataMaster.push(nama.trim());
+        renderTable();
+    }
+}
+
+function editData(index) {
+    const namaBaru = prompt("Edit Jenis Kelamin:", dataMaster[index]);
+
+    if (namaBaru && namaBaru.trim() !== "") {
+        dataMaster[index] = namaBaru.trim();
+        renderTable();
+    }
+}
+
+function hapusData(index) {
+    if (confirm("Yakin ingin menghapus data ini?")) {
+        dataMaster.splice(index, 1);
+        renderTable();
+    }
+}
+
+function hapusTerpilih() {
+    const checkboxes = document.querySelectorAll("#tableBody input[type='checkbox']:checked");
+
+    if (checkboxes.length === 0) {
+        alert("Pilih data yang ingin dihapus.");
+        return;
+    }
+
+    if (confirm("Yakin ingin menghapus data terpilih?")) {
+        let indexToDelete = [];
+        checkboxes.forEach(cb => {
+            indexToDelete.push(parseInt(cb.value));
+        });
+
+        dataMaster = dataMaster.filter((_, index) => !indexToDelete.includes(index));
+        renderTable();
+    }
+}
+
+document.addEventListener("DOMContentLoaded", renderTable);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,273 @@
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    background: #ffffff;
+}
+
+/* TOMBOL LOG OUT*/
+.tombol-keluar {
+    /* position: fixed; */
+    top: 20px;
+    position: absolute;
+right: 40px;
+
+    /* right: 25px; */
+    background: #7a0000;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.tombol-keluar:hover {
+    background: #5e0000;
+}
+
+/*SIDEBAR*/
+.sidebar {
+    width: 260px;
+    background: linear-gradient(to bottom, #8b0000, #3b0000);
+    color: #fff;
+    padding: 20px 15px;
+    min-height: 100vh;
+}
+/* SIDEBAR TERTUTUP  */
+.sidebar.tertutup {
+    width: 60px;
+    padding: 20px 5px;
+}
+
+/* SEMBUNYIKAN SEMUA ISI SIDEBAR */
+.sidebar.tertutup .logo span,
+.sidebar.tertutup .item-menu,
+.sidebar.tertutup .submenu,
+.sidebar.tertutup .item-submenu,
+.sidebar.tertutup .garis-menu {
+    display: none !important;
+}
+
+/* TOMBOL < HARUS TETAP MUNCUL */
+.sidebar.tertutup .tombol-menu {
+    display: block;
+    margin: 0 auto;
+}
+
+/*LOGO*/
+.logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.tombol-menu {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/*GARIS*/
+.garis-menu {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.35);
+    margin: 12px 0;
+}
+
+/*MENU*/
+.item-menu {
+    padding: 8px 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    position: relative;
+}
+/*  */
+
+.item-menu.aktif {
+    text-decoration: underline;
+}
+
+/*PANAH*/
+.panah-menu {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/*SUBMENU*/
+.submenu {
+    text-align: center;
+    margin-top: 5px;
+    /* new */
+        display: none;
+    /* end new */
+}
+/*  */
+
+
+.submenu.aktif {
+    display: block;
+}
+
+/*  */
+
+.item-submenu {
+    display: block;
+    padding: 6px 0;
+    font-size: 14px;
+    color: rgba(255, 200, 200, 0.85);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.item-submenu.aktif {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/*KONTEN*/
+.konten {
+    flex: 1;
+    padding: 20px 40px 30px;
+    /* new */
+        position: relative;  
+    /* end new */
+
+}
+/*  */
+
+
+
+.konten h2 {
+    margin: 0 0 25px;
+    font-size: 26px;
+}
+
+/*FORM WRAPPER*/
+.pembungkus-form {
+    display: flex;
+    gap: 50px;
+    align-items: flex-start;
+}
+
+/*FOTO*/
+.kotak-foto {
+    width: 180px;
+    text-align: center;
+}
+
+.pratinjau-foto {
+    width: 160px;
+    height: 200px;
+    background: #d9d9d9;
+    margin-bottom: 10px;
+    border: 2px solid #999;
+}
+
+.tombol-unggah {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 6px 14px;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/*FORM*/
+.form {
+    flex: 1;
+    max-width: 900px;
+}
+
+.baris-form {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    align-items: center;
+    margin-bottom: 14px;
+    column-gap: 20px;
+}
+
+.baris-form label {
+    font-size: 14px;
+}
+
+.baris-form input {
+    height: 30px;
+    border: 1px solid #888;
+    padding: 4px 8px;
+    width: 100%;
+}
+
+/* new */
+.form-vertikal .baris-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 18px;
+}
+
+.form-vertikal .baris-form label {
+    margin-bottom: 6px;
+}
+
+.form-vertikal .baris-form input {
+    height: 36px;
+}
+/* end new */
+
+/*AKSI FORM*/
+.aksi-form {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.tombol-ubah {
+    background: #f1c40f;
+    color: #000;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.tombol-hapus {
+    background: #c0392b;
+    color: #fff;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* new */
+.tombol-tambah {
+    background: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+/* end new */
+
+
