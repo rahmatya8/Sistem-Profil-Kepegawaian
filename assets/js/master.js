@@ -1,76 +1,102 @@
-let dataMaster = []; // Kosong dulu supaya bisa tes "Belum ada data"
+//CHECKBOX//
+document.addEventListener("DOMContentLoaded", function () {
 
-function renderTable() {
-    const tbody = document.getElementById("tableBody");
-    tbody.innerHTML = "";
+    const checkAll = document.getElementById("checkAll");
 
-    if (dataMaster.length === 0) {
-        tbody.innerHTML = `
-            <tr>
-                <td colspan="3" style="text-align:center; padding:20px;">
-                    Belum ada data
-                </td>
-            </tr>
-        `;
-        return;
-    }
+    if (checkAll) {
+        checkAll.addEventListener("change", function () {
 
-    dataMaster.forEach((item, index) => {
-        tbody.innerHTML += `
-            <tr>
-                <td><input type="checkbox" value="${index}"></td>
-                <td>${item}</td>
-                <td>
-                    <button class="tombol-ubah" onclick="editData(${index})">✏</button>
-                    <button class="tombol-hapus" onclick="hapusData(${index})">🗑</button>
-                </td>
-            </tr>
-        `;
-    });
-}
+            const checkboxes = document.querySelectorAll("input[name='id_delete[]']");
 
-function tambahData() {
-    const nama = prompt("Masukkan Jenis Kelamin:");
+            checkboxes.forEach(cb => {
+                cb.checked = this.checked;
+            });
 
-    if (nama && nama.trim() !== "") {
-        dataMaster.push(nama.trim());
-        renderTable();
-    }
-}
-
-function editData(index) {
-    const namaBaru = prompt("Edit Jenis Kelamin:", dataMaster[index]);
-
-    if (namaBaru && namaBaru.trim() !== "") {
-        dataMaster[index] = namaBaru.trim();
-        renderTable();
-    }
-}
-
-function hapusData(index) {
-    if (confirm("Yakin ingin menghapus data ini?")) {
-        dataMaster.splice(index, 1);
-        renderTable();
-    }
-}
-
-function hapusTerpilih() {
-    const checkboxes = document.querySelectorAll("#tableBody input[type='checkbox']:checked");
-
-    if (checkboxes.length === 0) {
-        alert("Pilih data yang ingin dihapus.");
-        return;
-    }
-
-    if (confirm("Yakin ingin menghapus data terpilih?")) {
-        let indexToDelete = [];
-        checkboxes.forEach(cb => {
-            indexToDelete.push(parseInt(cb.value));
         });
-
-        dataMaster = dataMaster.filter((_, index) => !indexToDelete.includes(index));
-        renderTable();
     }
+
+});
+
+// MODAL //
+//Modal Tambah
+function openModal() {
+    document.getElementById("modalTambah").style.display = "block";
 }
 
-document.addEventListener("DOMContentLoaded", renderTable);
+function closeModal() {
+    document.getElementById("modalTambah").style.display = "none";
+}
+
+let deleteId = null;
+
+//Modal Hapus
+function openDeleteModal(id) {
+    deleteId = id;
+
+    // set link hapus
+    document.getElementById("btnHapusFinal").href = "?hapus=" + id;
+
+    document.getElementById("modalHapus").style.display = "block";
+}
+
+function closeDeleteModal() {
+    document.getElementById("modalHapus").style.display = "none";
+}
+
+// BULK-DELETE //
+// Buka Modal
+function openBulkDeleteModal() {
+
+    const checked = document.querySelectorAll("input[name='id_delete[]']:checked");
+
+    if (checked.length < 2) {
+    showToast("Pilih minimal 2 data untuk menghapus!", "warning");
+    return;
+    }
+
+    document.getElementById("modalBulkDelete").style.display = "block";
+}
+
+// Tutup Modal
+function closeBulkDeleteModal() {
+    document.getElementById("modalBulkDelete").style.display = "none";
+}
+
+// Submit Form
+function submitBulkDelete() {
+    document.getElementById("formBulkDelete").submit();
+}
+
+//Toast Notif for Bulk-Delete//
+function showToast(message, type = "warning") {
+
+    const toast = document.getElementById("toastNotif");
+
+    toast.textContent = message;
+    toast.className = "toast show " + type;
+
+    setTimeout(() => {
+        toast.className = "toast";
+    }, 3000);
+}
+
+
+// Untuk Tutup Modal Jika Klik di Luar Windows //
+window.addEventListener("click", function(event) {
+
+    const modals = [
+        "modalTambah",
+        "modalHapus",
+        "modalBulkDelete",
+        "modalEdit"
+    ];
+
+    modals.forEach(id => {
+        const modal = document.getElementById(id);
+        if (modal && event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+});
+
